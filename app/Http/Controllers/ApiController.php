@@ -11,21 +11,21 @@ use Illuminate\Support\Facades\Schema;
 class ApiController extends Controller
 {
     //
-    public function unitOfMeasurment()
+    public function unitOfMeasurment($table_name)
     {
-        $unitOfMeasurment = DB::table('unit_of_measurement')->select('id','name')->get();
-        echo Response::json($unitOfMeasurment,200);
+        $unitOfMeasurment = DB::table($table_name)->select('id','name')->get();
+        return Response::json($unitOfMeasurment,200);
     }
 
     public function apiDropDown($table_name)
     {
         $response = DB::table($table_name)->select('id','name')->get();
-        echo Response::json($response,200);
+        return Response::json($response);
     }
 
-    public function products($table_name,$array,Request $request)
+    public function products($table_name,Request $request)
     {
-        $query = DB::table($table_name)->select(DB::raw("SUM(total_amount) as count,SUM(quantity2) as quantity"));
+        $query = DB::table($table_name);
         if(Schema::hasTable($table_name))
         {
             $data = $request->except('_token');

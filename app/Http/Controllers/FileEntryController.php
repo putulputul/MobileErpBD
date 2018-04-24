@@ -8,7 +8,10 @@ use Request;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use Illuminate\Http\Response;
+use DB;
+use Response;
+use Auth;
+
 
 class FileEntryController extends Controller {
 
@@ -33,10 +36,8 @@ class FileEntryController extends Controller {
         $entry->mime = $file->getClientMimeType();
         $entry->original_filename = $file->getClientOriginalName();
         $entry->filename = $file->getFilename().'.'.$extension;
-
         $entry->save();
-
-      //  return redirect('fileentry');
+        return Response::json(array('status'=>'success','message'=>'File Upload Successfully!'), 320);
 
     }
 }
